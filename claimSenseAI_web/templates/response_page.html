@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
+    <link rel="stylesheet" href="../static/css/css.css">
+    <title>Claim Review Results</title>
+</head>
+<body>
+<div class="wrapper">
+    <div id="title">
+    <h1>AI Claim Review</h1>
+    </div>
+    <div id="response">
+        {{ review_output }}
+    </div>
+    <a id="resButton" href="{{ url_for('home') }}">Go back</a>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../static/js/js.js"></script>
+    <script src="{{ url_for('static', filename='js/js.js') }}"></script>
+</div>
+</body>
+</html>

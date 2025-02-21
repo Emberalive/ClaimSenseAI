@@ -1,0 +1,162 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: "Century Gothic", sans-serif;
+    background-color: #101010;
+    font-size: 1em;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    margin: 2%;
+}
+
+#title {
+    width: 100%;
+    border-bottom: #181818 2px solid;
+    background-color: #101010;
+}
+
+#response {
+    width : 40%;
+    margin : 0 auto;
+    margin-top: 2%;
+    padding: 2%;
+    border: 1px solid #C0C0C0;
+    background-color: #181818;
+    color: #C0C0C0;
+    overflow-wrap: break-word;  /* Same as above, modern syntax */
+    white-space: pre-wrap;  /* Ensures the text will wrap and doesn't overflow */
+    max-width: 100%; /* Ensure it doesn't overflow the container */
+}
+
+#button {
+    font-size: 1.2em;
+    margin-top: 4%;
+    position: relative;
+    left: 40%;
+    text-decoration: none;
+    padding: 0.8%;
+    color: #C0C0C0;
+    background-color: #101010;
+    border: 2px solid #181818;
+}
+
+#resButton {
+    font-size: 1.2em;
+    margin-top: 4%;
+    position: relative;
+    left: 80%;
+    text-decoration: none;
+    padding: 0.3%;
+    color: #C0C0C0;
+    background-color: #101010;
+    border: 2px solid #181818;
+}
+
+#resButton:hover {
+    background-color: #181818;
+    border-color: #101010;
+    color: #fff;
+}
+#button:hover {
+    background-color: #181818;
+    border-color: #101010;
+    color: #fff;
+}
+
+.block {
+    min-height: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+}
+
+#load_bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: transparent;
+    z-index: 9999;
+}
+
+.load_progress {
+    width: 0;
+    height: 100%;
+    background-color: cornflowerblue;
+    animation: loading 2s linear infinite;
+}
+
+@keyframes loading {
+    0% {
+        width: 0;
+    }
+    50% {
+        width: 50%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+#claim_file_name, #policy_file_name {
+    margin: 2%;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin: 2%;
+    gap: 8%;
+    width: 100%;
+    height: 100%;
+}
+
+.file_input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin: 2%;
+    gap: 4%;
+    width: 100%;
+    height: 100%;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom_file_upload {
+    font-size: 1.2em;
+    padding: 0.7%;
+    color: #C0C0C0;
+    background-color: #101010;
+    cursor: pointer;
+}
+
+.custom_file_upload:hover {
+    background-color: #181818;
+    border-color: #101010;
+    color: #fff;
+}
+
+p {
+    text-align: center;
+    color: lightcoral;
+}
+
+.hidden {
+    display: none;
+}

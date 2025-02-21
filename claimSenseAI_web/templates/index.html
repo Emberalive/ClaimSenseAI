@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
+  <link rel="stylesheet" href="../static/css/css.css">
+  <title>Insurance Claim AI Reviewer</title>
+</head>
+<body>
+  <div id="title">
+    <h1>Upload Your Insurance Claim and Policy PDF</h1>
+    <div id="load_bar" class="hidden">
+      <div class="load_progress"></div>
+    </div>
+  </div>
+  <div id="response">
+      <form id="form_post" action="/process" method="POST" enctype="multipart/form-data">
+        <div class="block">
+          <div class="center">
+            <label class="custom_file_upload" for="claim_pdf">Claim PDF</label>
+            <label class="custom_file_upload" for="policy_pdf">Policy PDF</label>
+          </div>
+            <div class="file_input">
+              <span id="claim_file_name">No File Chosen</span>
+              <span id="policy_file_name">No File Chosen</span>
+            </div>
+          </div>
+        <p id="warning">Please Give the two documents required</p>
+        <input id="claim_pdf" type="file" name="claim_pdf" required>
+          <input id="policy_pdf" type="file" name="policy_pdf" required>
+         <button id="button" type="submit">Submit</button>
+      </form>
+  </div>
+<!--<script src="../static/js/js.js"></script>-->
+<script src="{{ url_for('static', filename='js/js.js') }}"></script>
+</body>
+</html>
