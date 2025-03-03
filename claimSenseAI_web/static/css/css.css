@@ -112,7 +112,7 @@ h1 {
     margin: 2%;
 }
 
-.center {
+.row {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -159,4 +159,27 @@ p {
 
 .hidden {
     display: none;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#prompt {
+    max-width: 80%;
+    min-width: 80%;
+    width: 80%;
+    resize: none;
+    height: 10em;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+}
+#prompt:focus {
+    border-color: cornflowerblue;
+    outline: none;
 }

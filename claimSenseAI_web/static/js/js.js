@@ -5,14 +5,26 @@ window.addEventListener("load", function() {
         const policyInput = document.getElementById("policy_pdf");
         const policyFileName = document.getElementById("policy_file_name");
 
-        const warning = document.getElementById("warning");
+        const input_warning = document.getElementById("input_warning");
+        const prompt_input = document.getElementById("prompt");
+
+        prompt_input.addEventListener("input", function() {
+                if (prompt_input.value.trim() !== "") {
+                        input_warning.classList.add("hidden");
+                } else {
+                        input_warning.classList.remove("hidden");
+                }
+        })
+
+
+        const file_warning = document.getElementById("file_warning");
 
         function checkFiles() {
                 // Check if both inputs have files selected
                 if (claimInput.files.length > 0 && policyInput.files.length > 0) {
-                        warning.classList.add("hidden"); // Add the class to hide the warning
+                        file_warning.classList.add("hidden"); // Add the class to hide the warning
                 } else {
-                        warning.classList.remove("hidden"); // Show the warning if any input is empty
+                        file_warning.classList.remove("hidden"); // Show the warning if any input is empty
                 }
         }
 
@@ -23,6 +35,7 @@ window.addEventListener("load", function() {
                         displayElement.textContent = "No file chosen";
                 }
         }
+
 
         // Listen for changes in both file inputs
         claimInput.addEventListener("change", function() {
@@ -55,11 +68,4 @@ window.addEventListener("load", function() {
         window.addEventListener('load', () => {
                 loadingBar.classList.add("hidden");  // Hide when the new page has loaded
         });
-
-
-        //
-        // const responseDiv = document.getElementById("response");
-        // const markDown = responseDiv.innerText;
-        // const htmlDiv = marked.parse(markDown);
-        // htmlDiv.innerHtml = markDown;
 });
