@@ -5,6 +5,7 @@ import PyPDF2
 from langchain_openai import ChatOpenAI
 from langchain.schema import SystemMessage, HumanMessage
 from dotenv import load_dotenv
+from markdown import markdown
 
 # Load environment variables from a .env file (if present)
 load_dotenv()
@@ -52,7 +53,7 @@ def extract_text_from_pdf(pdf_path_1, pdf_path_2):
         return None
 
 
-def analyze_claim(text):
+def analyze_claim(text, user_prompt):
     """
     Uses GPT-4-Turbo to review the insurance claim.
 
@@ -61,6 +62,8 @@ def analyze_claim(text):
 
     Returns:
         str: AI-generated summary, key details, and red flags (if any).
+        :param text:
+        :param user_prompt:
     """
     try:
         # Initialize the OpenAI language model with GPT-4-Turbo
@@ -71,7 +74,8 @@ def analyze_claim(text):
             SystemMessage(
                 content="You are an AI assistant that reviews insurance claims for accuracy, fraud detection, and compliance."),
             HumanMessage(
-                content=f"Here is an insurance claim and policy document:\n{text}\n\nReview these document's and provide a summary, key details, and any potential red flags.")
+                content=f"Here is an insurance claim and policy document:\n{text}\n\n" + user_prompt)
+            # Review these document's and provide a summary, key details, and any potential red flags.
         ]
 
         # Use the invoke method to get AI response
@@ -91,6 +95,8 @@ def process_files():
     claim_pdf = request.files['claim_pdf']
     policy_pdf = request.files['policy_pdf']
 
+    user_prompt = request.form['prompt']
+
     claim_pdf_path = os.path.join('uploads', claim_pdf.filename)
     policy_pdf_path = os.path.join('uploads', policy_pdf.filename)
 
@@ -100,9 +106,10 @@ def process_files():
     extracted_text = extract_text_from_pdf(claim_pdf_path, policy_pdf_path)
 
 
-    review_output = analyze_claim(extracted_text)
+    review_output = analyze_claim(extracted_text, user_prompt)
+    markdown_as_html = markdown(review_output)
 
-    return render_template('response_page.html', review_output=review_output)
+    return render_template('response_page.html', review_output=markdown_as_html )
 
 # Run the main function when the script is executed
 if __name__ == "__main__":
