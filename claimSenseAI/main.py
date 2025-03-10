@@ -88,9 +88,28 @@ def analyze_claim(text, user_prompt):
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template("Auth.html")
 
 @app.route('/process', methods=['POST'])
+def process_login(): #process_files():
+
+    password_actual = "password"
+    username_actual = "samuel"
+
+    username = request.form["username"]
+    password = request.form["password"]
+
+    print(username)
+    print(password)
+
+    if password_actual == password:
+        if username_actual == username:
+            return render_template("index.html")
+
+    return render_template("login_failed.html")
+
+
+@app.route('/upload', methods=['POST'])
 def process_files():
     claim_pdf = request.files['claim_pdf']
     policy_pdf = request.files['policy_pdf']

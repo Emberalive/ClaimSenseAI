@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
+    <link rel="stylesheet" href="../static/css/css.css">
+    <title>Claim Review Results</title>
+</head>
+<body>
+<div class="wrapper">
+    <div id="title">
+        <h1>AI Claim Review</h1>
+    </div>
+
+    <div id="response">
+        <form id="login" action="/process" method="POST" enctype="multipart/form-data">
+            <label for="username">Username</label>
+            <input id="username" type="text" name="username" required>
+
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+</body>
+</html>

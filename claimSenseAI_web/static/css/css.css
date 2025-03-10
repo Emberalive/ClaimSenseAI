@@ -1,7 +1,10 @@
 * {
     padding: 0;
     margin: 0;
+    font-family: "Century Gothic", sans-serif;
+    color: white;
 }
+
 
 body {
     font-family: "Century Gothic", sans-serif;
@@ -182,4 +185,13 @@ p {
 #prompt:focus {
     border-color: cornflowerblue;
     outline: none;
+}
+
+#form {
+    display: flex;
+    margin: 0 auto;
+}
+
+#login > input{
+    color: black;
 }
