@@ -28,29 +28,25 @@ app = Flask(
     template_folder=os.path.join(BASE_DIR, '../claimSenseAI_web/templates'),
     static_folder=os.path.join(BASE_DIR, '../claimSenseAI_web/static')
 )
-def extract_text_from_pdf(pdf_path_1, pdf_path_2):
+
+def extract_text_from_pdf(pdf_path):
     """
-    Extracts text from 2 PDF files.
+    Extracts text from two lists of PDF files.
     Args:
-        pdf_path_1 (str): The file path of the PDF document.
-        pdf_path_2 (str): the file of the PDF document
+        pdf_path : a document taken from the user
 
     Returns:
-        str: Extracted text from the combined PDF's.
+        str: Extracted text from the pdf
     """
     try:
         text = ""
-        with open(pdf_path_1,  "rb") as file:
-            reader1 = PyPDF2.PdfReader(file)
-            # Extract text from each page and join them with newline
-            text += "\n".join([page.extract_text() for page in reader1.pages if page.extract_text()])
 
-        with open(pdf_path_2, "rb") as file:
-            reader2 = PyPDF2.PdfReader(file)
-            # extract text from each page and join them with newline
-            text += "\n".join([page.extract_text() for page in reader2.pages if page.extract_text()])
+        # Process the first list of PDFs (pdf_paths_1)
+        with open(pdf_path, "rb") as file:
+            reader = PyPDF2.PdfReader(file)
+            text += "\n".join([page.extract_text() for page in reader.pages if page.extract_text()])
+            return text.strip() if text else None  # Return None if no text is extracted
 
-        return text.strip() if text else None # ensures that None is returned if there is no text
     except Exception as e:
         print(f"Error while reading PDF: {e}")
         return None
@@ -139,22 +135,37 @@ def process_login(): #process_files():
 
 @app.route('/upload', methods=['POST'])
 def process_files():
-    claim_pdf = request.files['claim_pdf']
-    policy_pdf = request.files['policy_pdf']
+    extracted_text = ""
+
+    claims  = request.files.getlist('claim_pdf')
+    policies = request.files.getlist('policy_pdf')
 
     user_prompt = request.form['prompt']
 
-    claim_pdf_path = os.path.join('uploads', claim_pdf.filename)
-    policy_pdf_path = os.path.join('uploads', policy_pdf.filename)
+    for claim in claims:
+        claim_pdf_path = os.path.join('uploads', claim.filename)
+        claim.save(claim_pdf_path)
 
-    claim_pdf.save(claim_pdf_path)
-    policy_pdf.save(policy_pdf_path)
+        claim_text = extract_text_from_pdf(claim_pdf_path)
 
-    extracted_text = extract_text_from_pdf(claim_pdf_path, policy_pdf_path)
+        if claim_text:
+            extracted_text += "This is a new claim:\n" + claim_text + "\n\n"
+
+    for policy in policies:
+        policy_pdf_path = os.path.join('uploads', policy.filename)
+        policy.save(policy_pdf_path)
+
+        policy_text = extract_text_from_pdf(policy_pdf_path)
+
+        if policy_text:
+            extracted_text += "This is a new policy:\n" + policy_text + "\n\n"
+
 
 
     review_output = analyze_claim(extracted_text, user_prompt)
     markdown_as_html = markdown(review_output)
+
+    print(extracted_text)
 
     return render_template('response_page.html', review_output=markdown_as_html )
 
