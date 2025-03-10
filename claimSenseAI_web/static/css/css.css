@@ -12,7 +12,7 @@ body {
     font-size: 1em;
 }
 
-h1 {
+#title > h1 {
     color: white;
     text-align: center;
     margin: 2%;
@@ -26,8 +26,7 @@ h1 {
 
 #response {
     width : 40%;
-    margin : 0 auto;
-    margin-top: 2%;
+    margin: 2% auto 0;
     padding: 2%;
     border: 1px solid #C0C0C0;
     background-color: #181818;
@@ -166,9 +165,19 @@ input[type="file"] {
     color: #C0C0C0;
 }
 
-p {
+#response > form > p {
     text-align: center;
     color: lightcoral;
+}
+
+li {
+    list-style-type: none;
+    color: #C0C0C0;
+    padding-bottom: 2%;
+    margin-top: 0.5%;
+    border-bottom: 1px dashed #C0C0C0;
+    width: 100%;
+    text-align: center;
 }
 
 .hidden {
@@ -214,6 +223,7 @@ p {
 }
 
 #prompt {
+    color: black;
     max-width: 80%;
     min-width: 80%;
     width: 80%;

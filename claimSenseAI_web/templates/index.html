@@ -21,14 +21,18 @@
             <label class="custom_file_upload" for="claim_pdf">Claim PDF</label>
             <label class="custom_file_upload" for="policy_pdf">Policy PDF</label>
           </div>
-            <div class="file_input">
-              <span id="claim_file_name">No File Chosen</span>
-              <span id="policy_file_name">No File Chosen</span>
-            </div>
+              <div class="file_input">
+                <ul style="margin: 30px" id="claim_file_list">
+                  <li>No File Chosen</li>
+                </ul>
+                <ul style="margin: 30px" id="policy_file_list">
+                  <li>No File Chosen</li>
+                </ul>
+              </div>
           </div>
-        <p id="file_warning">Please Give the two documents required</p>
-        <input id="claim_pdf" type="file" name="claim_pdf" required>
-          <input id="policy_pdf" type="file" name="policy_pdf" required>
+        <p id="file_warning">Please Give the documents required</p>
+        <input id="claim_pdf" type="file" name="claim_pdf" multiple required>
+          <input id="policy_pdf" type="file" name="policy_pdf" multiple required>
         <div class="center">
           <label for="prompt"></label>
           <textarea id="prompt" name="prompt" rows="4" cols="50" placeholder="Type your message here..." required></textarea>

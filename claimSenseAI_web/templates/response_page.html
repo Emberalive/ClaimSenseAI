@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/css.css') }}">
     <link rel="stylesheet" href="../static/css/css.css">
     <title>Claim Review Results</title>
@@ -13,7 +14,7 @@
     <h1>AI Claim Review</h1>
     </div>
     <div id="response">
-        {{ review_output }}
+        {{ review_output|safe }}
     </div>
     <a id="resButton" href="{{ url_for('home') }}">Go back</a>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>

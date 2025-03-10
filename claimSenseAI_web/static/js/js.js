@@ -1,9 +1,9 @@
 window.addEventListener("load", function() {
         const claimInput = document.getElementById("claim_pdf");
-        const claimFileName = document.getElementById("claim_file_name");
+        const claimFileList = document.getElementById("claim_file_list");  // Fix: Get the correct element
 
         const policyInput = document.getElementById("policy_pdf");
-        const policyFileName = document.getElementById("policy_file_name");
+        const policyFileList = document.getElementById("policy_file_list");  // Fix: Get the correct element
 
         const input_warning = document.getElementById("input_warning");
         const prompt_input = document.getElementById("prompt");
@@ -14,38 +14,43 @@ window.addEventListener("load", function() {
                 } else {
                         input_warning.classList.remove("hidden");
                 }
-        })
-
+        });
 
         const file_warning = document.getElementById("file_warning");
 
         function checkFiles() {
                 // Check if both inputs have files selected
                 if (claimInput.files.length > 0 && policyInput.files.length > 0) {
-                        file_warning.classList.add("hidden"); // Add the class to hide the warning
+                        file_warning.classList.add("hidden"); // Hide warning
                 } else {
-                        file_warning.classList.remove("hidden"); // Show the warning if any input is empty
+                        file_warning.classList.remove("hidden"); // Show warning if any input is empty
                 }
         }
 
-        function updateFileName(input, displayElement) {
+        function updateFileList(input, fileListElement) {
+                fileListElement.innerHTML = ''; // Clear the previous list
                 if (input.files.length > 0) {
-                        displayElement.textContent = input.files[0].name;
+                        for (const file of input.files) {
+                                const listItem = document.createElement('li');
+                                listItem.textContent = file.name;
+                                fileListElement.appendChild(listItem);
+                        }
                 } else {
-                        displayElement.textContent = "No file chosen";
+                        const listItem = document.createElement('li');
+                        listItem.textContent = "No File Chosen";
+                        fileListElement.appendChild(listItem);
                 }
         }
-
 
         // Listen for changes in both file inputs
         claimInput.addEventListener("change", function() {
                 checkFiles();
-                updateFileName(claimInput, claimFileName);
+                updateFileList(claimInput, claimFileList);  // Fix: Pass correct element
         });
 
         policyInput.addEventListener("change", function() {
                 checkFiles();
-                updateFileName(policyInput, policyFileName)
+                updateFileList(policyInput, policyFileList);  // Fix: Pass correct element
         });
 
         const form = document.getElementById("form_post");
@@ -55,15 +60,11 @@ window.addEventListener("load", function() {
                 // Show the loading bar
                 loadingBar.classList.remove("hidden");
                 // Allow the form to submit normally
-                // The loading bar will be visible until the page redirects
         });
 
         const navigation = performance.getEntriesByType("navigation");
         if (navigation.length > 0 && navigation[0].type === "reload") {
                 loadingBar.classList.add("hidden");
-                if (navigation.length > 0 && navigation[0].type === "none") {
-                        loadingBar.classList.add("hidden");
-                }
         }
         window.addEventListener('load', () => {
                 loadingBar.classList.add("hidden");  // Hide when the new page has loaded
