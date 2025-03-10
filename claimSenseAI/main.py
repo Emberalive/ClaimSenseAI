@@ -6,6 +6,9 @@ from langchain_openai import ChatOpenAI
 from langchain.schema import SystemMessage, HumanMessage
 from dotenv import load_dotenv
 from markdown import markdown
+from DBAccess.dbAccess import db_access
+import bcrypt
+
 
 # Load environment variables from a .env file (if present)
 load_dotenv()
@@ -93,20 +96,45 @@ def home():
 @app.route('/process', methods=['POST'])
 def process_login(): #process_files():
 
-    password_actual = "password"
-    username_actual = "samuel"
-
+    # grabbing the credentials from the form
     username = request.form["username"]
-    password = request.form["password"]
+    password = request.form["password"].encode('utf-8')
 
     print(username)
     print(password)
 
-    if password_actual == password:
-        if username_actual == username:
-            return render_template("index.html")
 
-    return render_template("login_failed.html")
+    # accessing the connection and cursor from the db access file
+    conn, cur = db_access()
+
+    # selecting the user from the database
+    query = "SELECT * FROM users WHERE username = %s"
+
+    # executing the query
+    print("\n getting user credentials from database")
+    try:
+        cur.execute(query, (username,))  # Pass username as a tuple
+        conn.commit()
+
+    except Exception as e:
+        print(f"Database error: {e}")
+        return render_template("login_failed.html")
+
+    # using the results to check the password
+    result = cur.fetchone()
+
+    print("\nchecking the inputted credentials against stored credentials")
+    if result:
+        stored_password = result[1]  # Ensure stored password is in bytes
+
+        if isinstance(stored_password, str):
+            stored_password = stored_password.encode('utf-8')
+
+        # Check if entered password matches stored password
+        if bcrypt.checkpw(password, stored_password):
+            return render_template("index.html")  # Redirect to the main page
+
+    return render_template("login_failed.html")  # If login fails, show error page
 
 
 @app.route('/upload', methods=['POST'])

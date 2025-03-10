@@ -4,9 +4,9 @@ def db_access():
     try:
         print("Attempting connection to the database\n")
         # put this is your name and password until we're at point where we can insert
-        conn = psycopg2.connect(database = "",
+        conn = psycopg2.connect(database = "claimsense_auth",
             user = "samuel",
-            host = "",
+            host = "192.168.0.38",
             password = "QwErTy1243!",
             port = 5432)
 
