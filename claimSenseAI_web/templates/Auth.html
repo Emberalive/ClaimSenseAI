@@ -13,16 +13,19 @@
         <h1>AI Claim Review</h1>
     </div>
 
-    <div id="response">
-        <form id="login" action="/process" method="POST" enctype="multipart/form-data">
-            <label for="username">Username</label>
-            <input id="username" type="text" name="username" required>
+    <div id="login">
+            <h2 id="login_title">Please Login</h2>
 
-            <label for="password">Password</label>
-            <input id="password" type="password" name="password" required>
-            <button type="submit">Login</button>
+        <form id="login_form" action="/process" method="POST" enctype="multipart/form-data">
+            <div class="login_container">
+                <label for="username">Username:</label>
+                <input id="username" type="text" name="username" required>
+                <label for="password">Password:</label>
+                <input id="password" type="password" name="password" required>
+            </div>
+            <button id="loginbutton" type="submit">Login</button>
         </form>
     </div>
-
+</div>
 </body>
 </html>
